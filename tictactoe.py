@@ -55,12 +55,15 @@ def check_slant(board, player):
     '''
     Checks if a player won by slant
     '''
-    sum = 0
+    sumright, sumleft = 0,0
     for i, row in enumerate(board):
+        print(i,row)
         for j in range(len(row)):
-            if board[j][i] == player and ((j + i == len(row)-1) or (i == j)):
-                sum += 1
-    if sum == len(row):
+            if board[j][i] == player and j + i == len(row)-1:
+                sumleft += 1
+            if board[j][i] == player and i == j:
+                sumright += 1
+    if sumright == len(row) or sumleft == len(row):
         return True
     return False
 
@@ -83,7 +86,7 @@ def update_board(board: Board, player: Player, coords: Coords):
     board[coords[0]][coords[1]] = player
 
 
-def get_move(player: Player) -> Coords:
+def get_move(player: Player, board: Board) -> Coords:
     """
     Asks a player for their next move.
 
@@ -91,7 +94,11 @@ def get_move(player: Player) -> Coords:
     :return: the coordinates the player chose
     """
     row, col = input(f"{player}'s move: ").split()
-    return int(row), int(col)
+    if board[int(row)][int(col)] == '*':
+        return int(row), int(col)
+    else:
+        print("Bad input, try again")
+        return get_move(player, board)
 
 
 def show_board(board: Board):
@@ -135,7 +142,7 @@ def play_game(board_size: int = None):
     current_player = X
     while not won(current_player, board):
         show_board(board)
-        coordinates = get_move(current_player)
+        coordinates = get_move(current_player,board)
         update_board(board, current_player, coordinates)
         current_player = switch_player(current_player)
     show_winner(current_player)
