@@ -55,12 +55,15 @@ def check_slant(board, player):
     '''
     Checks if a player won by slant
     '''
-    sum = 0
+    sumright, sumleft = 0,0
     for i, row in enumerate(board):
+        print(i,row)
         for j in range(len(row)):
-            if board[j][i] == player and ((j + i == len(row)-1) or (i == j)):
-                sum += 1
-    if sum == len(row):
+            if board[j][i] == player and j + i == len(row)-1:
+                sumleft += 1
+            if board[j][i] == player and i == j:
+                sumright += 1
+    if sumright == len(row) or sumleft == len(row):
         return True
     return False
 
