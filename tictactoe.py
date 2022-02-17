@@ -30,6 +30,9 @@ def create_board(size: int) -> Board:
 
 
 def check_rows(board, player):
+    '''
+    Check if a player won the game by the rows
+    '''
     for row in board:
         if row.count(player) == len(row):
             return True
@@ -37,6 +40,9 @@ def check_rows(board, player):
 
 
 def check_columns(board, player):
+    '''
+    Check if a player won the game by the columns
+    '''
     for i, row in enumerate(board):
         marks = 0
         for j in range(len(row)):
@@ -47,6 +53,9 @@ def check_columns(board, player):
 
 
 def won(player: Player, board: Board) -> bool:
+    '''
+    Function to check if we have a winner in the current game
+    '''
     return check_rows(board, player) or check_columns(board, player)
 
 
