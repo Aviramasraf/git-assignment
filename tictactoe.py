@@ -51,12 +51,25 @@ def check_columns(board, player):
             return True
     return False
 
+def check_slant(board, player):
+    '''
+    Checks if a player won by slant
+    '''
+    sum = 0
+    for i, row in enumerate(board):
+        for j in range(len(row)):
+            if board[j][i] == player and ((j + i == len(row)-1) or (i == j)):
+                sum += 1
+    if sum == len(row):
+        return True
+    return False
+
 
 def won(player: Player, board: Board) -> bool:
     '''
     Function to check if we have a winner in the current game
     '''
-    return check_rows(board, player) or check_columns(board, player)
+    return check_rows(board, player) or check_columns(board, player) or check_slant(board, player)
 
 
 def update_board(board: Board, player: Player, coords: Coords):
