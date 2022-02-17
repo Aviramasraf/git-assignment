@@ -120,4 +120,5 @@ def play_game(board_size: int = None):
 
 
 if __name__ == '__main__':
+    print("Have fun in the game!")
     play_game()
